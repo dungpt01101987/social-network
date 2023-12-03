@@ -1,44 +1,47 @@
 import './App.scss';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import Header from './components/Header';
-import ProgressBarComponent from './components/ProgressBarComponent';
-import ListPosts from './components/ListPosts';
+import Home from './components/Home';
+import Users from './components/Users';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <Container>
-      <Row>
-        <Col>
-          <header>
-            <Header />
-          </header>
-        </Col>
-      </Row>
+    <div className='app-container'>
+      <Header />
+      <Container>
 
-      <Row>
-        <Col md={3}>
-          <nav>
-            <h2>Navigation</h2>
-            <ProgressBarComponent />
-          </nav>
-        </Col>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/users' element={<Users />} />
+        </Routes>
+        {/* <Row>
+          <Col>
+            <header>
+              <Header />
+            </header>
+          </Col>
+        </Row>
 
-        <Col md={9}>
+        <Row>
           <main>
-            <h2>Main Content</h2>
-            <ListPosts />
+            <Router>
+              <Route path='/' element={<Home />} />
+              <Route path='/users' element={<Users />} />
+            </Router>
+            <Home />
           </main>
-        </Col>
-      </Row>
+        </Row> */}
+        {/* <Row>
+          <Col>
+            <footer>
+              <h3>Footer</h3>
+            </footer>
+          </Col>
+        </Row> */}
+      </Container>
+    </div >
 
-      <Row>
-        <Col>
-          <footer>
-            <h3>Footer</h3>
-          </footer>
-        </Col>
-      </Row>
-    </Container>
   );
 }
 
