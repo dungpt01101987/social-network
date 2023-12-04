@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap';
 import Header from './components/Header';
 import Home from './components/Home';
 import Users from './components/Users';
+import FormLogin from './components/FormLogin';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -14,31 +15,9 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/users' element={<Users />} />
+          <Route path='/login' element={<FormLogin />} />
         </Routes>
-        {/* <Row>
-          <Col>
-            <header>
-              <Header />
-            </header>
-          </Col>
-        </Row>
 
-        <Row>
-          <main>
-            <Router>
-              <Route path='/' element={<Home />} />
-              <Route path='/users' element={<Users />} />
-            </Router>
-            <Home />
-          </main>
-        </Row> */}
-        {/* <Row>
-          <Col>
-            <footer>
-              <h3>Footer</h3>
-            </footer>
-          </Col>
-        </Row> */}
       </Container>
     </div >
 
