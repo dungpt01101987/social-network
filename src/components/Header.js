@@ -1,11 +1,11 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Image } from 'react-bootstrap';
 import logApp from '../asscets/images/logo192.png';
 
 const Header = () => {
+
     // const location = useLocation();
     return (
         <>
@@ -25,7 +25,7 @@ const Header = () => {
                     <Navbar.Collapse id="responsive-navbar-nav" >
                         <Nav className="me-auto" activeKey={"/users"}>
                             <Nav.Link href="/" eventKey="/">Home</Nav.Link>
-                            <Nav.Link href="/users" eventKey="/users">Quản trị User</Nav.Link>
+                            <Nav.Link href="/users" eventKey="/users">User Management</Nav.Link>
                         </Nav>
                         <Nav>
                             <Nav.Link eventKey={2} href="/users">
@@ -36,10 +36,8 @@ const Header = () => {
                                 />
                                 Dũng Phạm
                             </Nav.Link>
-                            <NavDropdown title="" id="collapsible-nav-dropdown">
-                                <NavDropdown.Item href="/login">Login</NavDropdown.Item>
-                                <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
-                            </NavDropdown>
+                            <Nav.Link href="/login" eventKey="/login">Log in</Nav.Link>
+                            <Nav.Link href="/logout" eventKey="/logout">Log out</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

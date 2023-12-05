@@ -1,18 +1,25 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: "https://localhost:8080/api/v1/"
+    baseURL: "http://localhost:8080/api/v1/"
 });
 
-// Add a response interceptor
+let token = localStorage.getItem("token");
+if (token) {
+    console.log(">> Check token: ", token);
+    instance.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
+}
+
 instance.interceptors.response.use(function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    return response;
+    return response ? response : { statusCode: response.status };
 }, function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    return Promise.reject(error);
+    let res = {};
+    if (error.response) {
+        res.dataError = error.response.data;
+        res.status = error.response.status;
+        res.headers = error.response.headers;
+    }
+    return res;
 });
 
 export default instance;

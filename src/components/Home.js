@@ -1,6 +1,9 @@
 // ListPosts.js
-import React from 'react';
+import React, { useState } from 'react';
 import { ListGroup, Card, Image } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { getTimeLine } from '../services/TablePost';
 
 const postsData = [
     {
@@ -21,6 +24,22 @@ const postsData = [
 ];
 
 const Home = () => {
+    const navigate = useNavigate();
+    const [dataPost, setDataPost] = useState("");
+
+    const getListPost = async () => {
+        let res = await getTimeLine();
+        console.log(">>> CHeck ressssssss: ", res);
+    }
+
+    useEffect(() => {
+        let token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/login");
+        } else {
+            getListPost();
+        }
+    })
     return (
         <div className='home-container'>
             <ListGroup>
