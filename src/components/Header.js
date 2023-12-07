@@ -1,12 +1,32 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Image } from 'react-bootstrap';
+import { Image, NavDropdown, Navbar, Container, Nav } from 'react-bootstrap';
 import logApp from '../asscets/images/logo192.png';
+import { useNavigate } from 'react-router-dom';
+import { getUserLoginInfo } from '../services/TableUser';
+import { useEffect, useState } from 'react';
+import CheckToken from '../services/CheckToken';
+import { toast } from 'react-toastify';
+import UserAvatar from './UserAvatar';
 
 const Header = () => {
+    const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState(null);
 
-    // const location = useLocation();
+    const getUserInfo = async () => {
+        let res = await getUserLoginInfo();
+        if (res.dataError) {
+            toast.error(res.dataError);
+        } else {
+            setUserInfo(res);
+        }
+    }
+
+    useEffect(() => {
+        if (!CheckToken()) {
+            navigate("/login");
+        }
+        getUserInfo();
+    }, [navigate])
+
     return (
         <>
             <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary" activeKey="/users">
@@ -27,18 +47,24 @@ const Header = () => {
                             <Nav.Link href="/" eventKey="/">Home</Nav.Link>
                             <Nav.Link href="/users" eventKey="/users">User Management</Nav.Link>
                         </Nav>
-                        <Nav>
-                            <Nav.Link eventKey={2} href="/users">
-                                <Image
-                                    src="https://placekitten.com/30/30"
-                                    roundedCircle
-                                    className="mr-2"
-                                />
-                                Dũng Phạm
-                            </Nav.Link>
-                            <Nav.Link href="/login" eventKey="/login">Log in</Nav.Link>
-                            <Nav.Link href="/logout" eventKey="/logout">Log out</Nav.Link>
-                        </Nav>
+                        {
+                            userInfo ?
+                                (
+                                    <Nav>
+                                        <Nav.Link eventKey={2} href="/users">
+                                            <UserAvatar avatar={userInfo.avatar} name={userInfo.lastName + " " + userInfo.firstName} />
+                                        </Nav.Link>
+                                        <NavDropdown title="" id="basic-nav-dropdown">
+                                            <NavDropdown.Item href="/logout">Log out</NavDropdown.Item>
+                                        </NavDropdown>
+                                    </Nav>
+                                )
+                                :
+                                (
+                                    <></>
+                                )
+                        }
+
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

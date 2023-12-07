@@ -6,12 +6,11 @@ const instance = axios.create({
 
 let token = localStorage.getItem("token");
 if (token) {
-    console.log(">> Check token: ", token);
     instance.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
 }
 
 instance.interceptors.response.use(function (response) {
-    return response ? response : { statusCode: response.status };
+    return response.data ? response.data : { statusCode: response.status };
 }, function (error) {
     let res = {};
     if (error.response) {

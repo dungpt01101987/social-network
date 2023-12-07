@@ -5,6 +5,7 @@ import '../asscets/styles/FormLogin.scss';
 import { useNavigate } from 'react-router-dom';
 import { loginApi, verifyOtp } from '../services/Auth';
 import { toast } from 'react-toastify';
+import { Container } from 'react-bootstrap';
 const FormLogin = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
@@ -15,13 +16,11 @@ const FormLogin = () => {
 
     const handleLogin = async () => {
         let res = await loginApi(username, password);
-        console.log(">>> Check res ", res);
         if (res && res.dataError) {
             toast.error(res.dataError);
-            console.log(">>> Check res ", res);
         } else {
             setIsCheckOtp(true);
-            setOtp(res.data.otp);
+            setOtp(res.otp);
         }
     }
 
@@ -30,12 +29,11 @@ const FormLogin = () => {
         console.log(">>> Check resOtp ", resOtp);
         if (resOtp && resOtp.dataError) {
             toast.error(resOtp.dataError);
-            console.log(">>> Check res ", resOtp);
             return;
         } else {
             toast.success("Login successful!")
-            localStorage.setItem("token", resOtp.data.token);
-            navigate("/users");
+            localStorage.setItem("token", resOtp.token);
+            navigate("/");
         }
     }
     useEffect(() => {
@@ -45,47 +43,48 @@ const FormLogin = () => {
         }
     })
     return (
-        <div className='login-container col-12 col-sm-4'>
-            <div className='title'>Login</div>
-            <div className='text'>Username</div>
-            <input
-                type='text'
-                placeholder='Username ...'
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
-            />
-            <div className='input-password'>
+        <Container>
+            <div className='login-container col-12 col-sm-4'>
+                <div className='title'>Login</div>
+                <div className='text'>Username</div>
                 <input
-                    type={isshowPassword === true ? 'password' : 'text'}
-                    placeholder='Password ...'
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    type='text'
+                    placeholder='Username ...'
+                    value={username}
+                    onChange={(event) => setUsername(event.target.value)}
                 />
-                <FontAwesomeIcon
-                    icon={isshowPassword === true ? faEyeSlash : faEye}
-                    className='icon-eye-pass'
-                    onClick={() => setIsshowPassword(!isshowPassword)}
-                />
-            </div>
-            <button
-                className={username && password ? "active" : ""}
-                disabled={username && password ? false : true}
-                onClick={() => handleLogin()}
-            >
-                Lấy mã OTP
-            </button>
-            {
-                isCheckOtp ? (<>
-                    <div>Nhập OTP ({otp}): </div>
+                <div className='input-password'>
                     <input
-                        value={otp}
-                        onChange={(event) => setOtp(event.target.value)}
+                        type={isshowPassword === true ? 'password' : 'text'}
+                        placeholder='Password ...'
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
                     />
-                    <button onClick={() => handleOtp()}>Login</button>
-                </>) : (<></>)
-            }
-        </div >
-
+                    <FontAwesomeIcon
+                        icon={isshowPassword === true ? faEyeSlash : faEye}
+                        className='icon-eye-pass'
+                        onClick={() => setIsshowPassword(!isshowPassword)}
+                    />
+                </div>
+                <button
+                    className={username && password ? "active" : ""}
+                    disabled={username && password ? false : true}
+                    onClick={() => handleLogin()}
+                >
+                    Lấy mã OTP
+                </button>
+                {
+                    isCheckOtp ? (<>
+                        <div>Nhập OTP ({otp}): </div>
+                        <input
+                            value={otp}
+                            onChange={(event) => setOtp(event.target.value)}
+                        />
+                        <button onClick={() => handleOtp()}>Login</button>
+                    </>) : (<></>)
+                }
+            </div >
+        </Container>
     );
 };
 
