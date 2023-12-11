@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import Nav from 'react-bootstrap/Nav';
 
 const CreateAccount = () => {
     const navigate = useNavigate();
@@ -64,6 +65,11 @@ const CreateAccount = () => {
                         onClick={() => setIsshowPassword(!isshowPassword)}
                     />
                 </div>
+                <Nav defaultActiveKey="/login" as="ul">
+                    <Nav.Item as="li">
+                        <Nav.Link href="/login">Log In</Nav.Link>
+                    </Nav.Item>
+                </Nav>
                 <button
                     className={email && username && password ? "active" : ""}
                     disabled={email && username && password ? false : true}
@@ -71,6 +77,7 @@ const CreateAccount = () => {
                 >
                     Get OTP
                 </button>
+
                 {
                     flg ?
                         (

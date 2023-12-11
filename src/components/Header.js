@@ -13,6 +13,7 @@ const Header = () => {
 
     const getUserInfo = async () => {
         let res = await getUserLoginInfo();
+        console.log("Check user info: ", res);
         if (res.dataError) {
             toast.error(res.dataError);
         } else {

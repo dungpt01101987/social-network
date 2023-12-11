@@ -82,7 +82,7 @@ const FormLogin = () => {
                     disabled={username && password ? false : true}
                     onClick={() => handleLogin()}
                 >
-                    Lấy mã OTP
+                    Get OTP
                 </button>
                 {
                     isCheckOtp ? (<>
