@@ -16,17 +16,19 @@ const ListPosts = () => {
 
     const fetchData = useCallback(async () => {
         const response = await getTimeLine(page);
-        console.log("CHeck response >>>>", response);
-        setTimeout(() => {
-            const newItem = response.list_content;
-            console.log("CHeck newItem >>>>", newItem);
-            setPosts([...posts, ...newItem]);
-            setTotalRows(response.total);
-            if ((posts.length + newItem.length) >= response.total) {
-                setHasMore(false);
-            }
-            setPage(page + 1);
-        }, 1000);
+        if (response && response.dataError) {
+            console.error('Error fetching data:', response.dataError);
+        } else {
+            setTimeout(() => {
+                const newItem = response.list_content;
+                setPosts([...posts, ...newItem]);
+                setTotalRows(response.total);
+                if ((posts.length + newItem.length) >= response.total) {
+                    setHasMore(false);
+                }
+                setPage(page + 1);
+            }, 1000);
+        }
     }, [page, posts]);
 
     const [showModal, setShowModal] = useState(false);

@@ -14,4 +14,31 @@ const verifyOtp = (username, otp) => {
     });
 }
 
-export { loginApi, verifyOtp }
+const changePassword = (email) => {
+    return axios.get(`/auth/change-password/${email}`);
+}
+
+const newPassword = (token, email, passowrd) => {
+    return axios.patch("/auth/new-password", {
+        "token": token,
+        "email": email,
+        "password": passowrd
+    });
+}
+
+const createAccount = (username, email, passowrd) => {
+    return axios.post("/auth/register", {
+        "username": username,
+        "email": email,
+        "password": passowrd
+    });
+}
+
+const createAccountVerifyOtp = (username, otp) => {
+    return axios.post("/auth/register/verify-otp", {
+        "username": username,
+        "otp": otp
+    });
+}
+
+export { loginApi, verifyOtp, changePassword, newPassword, createAccount, createAccountVerifyOtp }

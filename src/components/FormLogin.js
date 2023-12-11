@@ -6,6 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { loginApi, verifyOtp } from '../services/Auth';
 import { toast } from 'react-toastify';
 import { Container } from 'react-bootstrap';
+import Nav from 'react-bootstrap/Nav';
+
+
 const FormLogin = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
@@ -66,6 +69,14 @@ const FormLogin = () => {
                         onClick={() => setIsshowPassword(!isshowPassword)}
                     />
                 </div>
+                <Nav defaultActiveKey="/home" as="ul">
+                    <Nav.Item as="li">
+                        <Nav.Link href="/change-password">Forgot password</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item as="li">
+                        <Nav.Link href="/register">Create account</Nav.Link>
+                    </Nav.Item>
+                </Nav>
                 <button
                     className={username && password ? "active" : ""}
                     disabled={username && password ? false : true}

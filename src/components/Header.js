@@ -3,7 +3,7 @@ import logApp from '../asscets/images/logo192.png';
 import { useNavigate } from 'react-router-dom';
 import { getUserLoginInfo } from '../services/TableUser';
 import { useEffect, useState } from 'react';
-import CheckToken from '../services/CheckToken';
+// import CheckToken from '../services/CheckToken';
 import { toast } from 'react-toastify';
 import UserAvatar from './UserAvatar';
 
@@ -21,9 +21,6 @@ const Header = () => {
     }
 
     useEffect(() => {
-        if (!CheckToken()) {
-            navigate("/login");
-        }
         getUserInfo();
     }, [navigate])
 
