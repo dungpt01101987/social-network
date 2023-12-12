@@ -1,29 +1,10 @@
 import { Image, NavDropdown, Navbar, Container, Nav } from 'react-bootstrap';
 import logApp from '../asscets/images/logo192.png';
-import { useNavigate } from 'react-router-dom';
-import { getUserLoginInfo } from '../services/TableUser';
-import { useEffect, useState } from 'react';
-// import CheckToken from '../services/CheckToken';
-import { toast } from 'react-toastify';
 import UserAvatar from './UserAvatar';
 
 const Header = () => {
-    const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useState(null);
-
-    const getUserInfo = async () => {
-        let res = await getUserLoginInfo();
-        console.log("Check user info: ", res);
-        if (res.dataError) {
-            toast.error(res.dataError);
-        } else {
-            setUserInfo(res);
-        }
-    }
-
-    useEffect(() => {
-        getUserInfo();
-    }, [navigate])
+    const username = localStorage.getItem("username");
+    const avatar = localStorage.getItem("avatar");
 
     return (
         <>
@@ -46,11 +27,11 @@ const Header = () => {
                             <Nav.Link href="/users" eventKey="/users">User Management</Nav.Link>
                         </Nav>
                         {
-                            userInfo ?
+                            username ?
                                 (
                                     <Nav>
                                         <Nav.Link eventKey={2} href="/users">
-                                            <UserAvatar avatar={userInfo.avatar} name={userInfo.lastName + " " + userInfo.firstName} />
+                                            <UserAvatar avatar={avatar ? avatar : null} name={username} />
                                         </Nav.Link>
                                         <NavDropdown title="" id="basic-nav-dropdown">
                                             <NavDropdown.Item href="/logout">Log out</NavDropdown.Item>

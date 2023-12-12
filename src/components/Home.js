@@ -7,6 +7,7 @@ import Header from './Header';
 import ListPosts from './ListPosts';
 import { useNavigate } from 'react-router-dom';
 
+
 const Home = () => {
     const navigate = useNavigate();
     useEffect(() => {

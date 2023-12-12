@@ -3,13 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import '../asscets/styles/FormLogin.scss';
 import { useNavigate } from 'react-router-dom';
-import { loginApi, verifyOtp } from '../services/Auth';
+import { loginApi } from '../services/Auth';
 import { toast } from 'react-toastify';
 import { Container } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
+import { handLoginRedux } from '../redux/actions/userAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const FormLogin = () => {
+    const dispatch = useDispatch();
+    const account = useSelector(state => state.user.account);
+
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -28,23 +33,14 @@ const FormLogin = () => {
     }
 
     const handleOtp = async () => {
-        let resOtp = await verifyOtp(username, otp);
-        console.log(">>> Check resOtp ", resOtp);
-        if (resOtp && resOtp.dataError) {
-            toast.error(resOtp.dataError);
-            return;
-        } else {
-            toast.success("Login successful!")
-            localStorage.setItem("token", resOtp.token);
-            navigate("/");
-        }
+        dispatch(handLoginRedux(username, otp));
     }
+
     useEffect(() => {
-        let token = localStorage.getItem("token");
-        if (token) {
+        if (account.auth && account.auth === true) {
             navigate("/");
         }
-    })
+    }, [account, navigate])
     return (
         <Container>
             <div className='login-container col-12 col-sm-4'>
