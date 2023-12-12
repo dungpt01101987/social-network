@@ -29,7 +29,6 @@ const FormLogin = () => {
 
     const handleOtp = async () => {
         let resOtp = await verifyOtp(username, otp);
-        console.log(">>> Check resOtp ", resOtp);
         if (resOtp && resOtp.dataError) {
             toast.error(resOtp.dataError);
             return;
@@ -38,7 +37,7 @@ const FormLogin = () => {
             localStorage.setItem("token", resOtp.token);
             localStorage.setItem("username", username);
             localStorage.setItem("avatar", null);
-            navigate("/");
+            navigate("/", { state: { auth: true } });
         }
     }
     useEffect(() => {
@@ -46,7 +45,7 @@ const FormLogin = () => {
         if (token) {
             navigate("/");
         }
-    })
+    }, [navigate])
     return (
         <Container>
             <div className='login-container col-12 col-sm-4'>

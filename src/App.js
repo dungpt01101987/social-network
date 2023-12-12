@@ -2,7 +2,7 @@ import './App.scss';
 import Home from './components/Home';
 import Users from './components/Users';
 import FormLogin from './components/FormLogin';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FormLogout from './components/FormLogout';
@@ -12,7 +12,11 @@ import CreateAccount from './components/CreateAccount';
 import CheckToken from './services/CheckToken';
 
 function App() {
-  const isLoggedIn = CheckToken();
+  const location = useLocation();
+  let isLoggedIn = CheckToken();
+  if (location.state != null && location.state.auth) {
+    isLoggedIn = true;
+  }
   return (
     <div className='app-container' >
       <Routes>
