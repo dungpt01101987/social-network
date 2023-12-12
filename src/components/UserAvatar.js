@@ -1,23 +1,27 @@
-import { useState } from 'react';
 import { Image } from 'react-bootstrap';
 import avaDefault from '../asscets/images/avata_default.png';
 
 const UserAvatar = (props) => {
-    console.log(">>>> CHeck props", props);
-    const [ava, setAva] = useState(null);
-    if (props.Image == null) {
-        setAva(avaDefault)
-    }
+    console.log(">>>> CHeck props: ", props);
     return (
-        <>
-            <Image
-                src={ava}
-                roundedCircle
-                className="user-info-image"
-            />
-            &nbsp;{props.name}
-
-        </>
+        props.avatar === "null" ?
+            <>
+                <Image
+                    src={avaDefault}
+                    roundedCircle
+                    className="user-info-image"
+                />
+                &nbsp;{props.name}
+            </>
+            :
+            <>
+                <Image
+                    src={props.avatar}
+                    roundedCircle
+                    className="user-info-image"
+                />
+                &nbsp;{props.name}
+            </>
 
     );
 }

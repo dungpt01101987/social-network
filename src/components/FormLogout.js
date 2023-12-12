@@ -6,7 +6,9 @@ const FormLogout = () => {
     useEffect(() => {
         let token = localStorage.getItem("token");
         if (token) {
-            localStorage.clear("token");
+            localStorage.removeItem("token");
+            localStorage.removeItem("username");
+            localStorage.removeItem("avatar");
             navigate("/login");
         }
     })

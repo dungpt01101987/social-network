@@ -36,6 +36,8 @@ const FormLogin = () => {
         } else {
             toast.success("Login successful!")
             localStorage.setItem("token", resOtp.token);
+            localStorage.setItem("username", username);
+            localStorage.setItem("avatar", null);
             navigate("/");
         }
     }

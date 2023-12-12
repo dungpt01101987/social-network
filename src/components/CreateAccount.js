@@ -20,7 +20,14 @@ const CreateAccount = () => {
     const handleCreateAccount = async () => {
         let res = await createAccount(username, email, password);
         if (res && res.dataError) {
-            toast.error(res.dataError);
+            if (res.dataError.email) {
+                toast.error(res.dataError.email);
+            } else if (res.dataError.username) {
+                toast.error(res.dataError.username);
+            } else {
+                toast.error(res.dataError);
+            }
+
         } else {
             setOtp(res.otp);
             setFlg(true);

@@ -47,7 +47,7 @@ const ListPosts = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
     return (
         <div className='home-container'>
             <div className='btn-create-new-post'>
